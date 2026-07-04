@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riwayat - SiPusta</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- HEADER & NAVIGASI -->
+    <header class="navbar">
+        <input type="checkbox" id="navToggle" class="nav-toggle">
+
+        <div class="container navbar-inner">
+            <a href="index.html" class="logo">📚 SiPusta</a>
+
+            <label for="navToggle" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="layanan.html">Layanan</a></li>
+                    <li><a href="riwayat.html" class="active">Riwayat</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- KONTEN UTAMA -->
+    <main>
+        <section class="section" id="riwayat">
+            <div class="container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                    <div>
+                        <h2>Riwayat Pengajuan</h2>
+                        <p class="section-desc" style="margin-bottom: 0;">Daftar semua pengajuan layanan perpustakaan yang telah Anda buat.</p>
+                    </div>
+                    <div>
+                        <span id="dataCount" style="font-size: 0.9rem; color: #7f4f24; margin-right: 12px; font-weight: bold;"></span>
+                        <button id="btnHapusSemua" class="btn btn-outline" style="padding: 8px 16px; display: none; font-size: 0.8rem; border-color: #ef4444; color: #ef4444;">🗑 Hapus Semua</button>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <caption>Data Pengajuan Layanan Perpustakaan</caption>
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>No. Anggota</th>
+                                <th>Layanan</th>
+                                <th>Tanggal</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tableBody">
+                            <!-- Data baris (tr) akan diisi oleh JavaScript secara otomatis dari bawah sini -->
+                        </tbody>
+                    </table>
+                    <div id="emptyState" style="text-align: center; padding: 40px; color: #7f4f24; display: none;">
+                        <p style="font-size: 1.2rem; margin-bottom: 12px;">📭 Belum ada riwayat pengajuan.</p>
+                        <a href="layanan.html" class="btn btn-primary" style="margin-top: 10px;">Ajukan Layanan Sekarang</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="kontak">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <strong>📚 SiPusta</strong>
+                <p>Perpustakaan Umum Kota Medan melayani masyarakat dalam meningkatkan budaya membaca dan literasi sejak 1987.</p>
+                <p style="margin-top: 12px; color: #e9c46a;">Buka setiap hari kecuali hari libur nasional.</p>
+            </div>
+
+            <div class="footer-nav">
+                <h4>Navigasi</h4>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="layanan.html">Layanan</a></li>
+                    <li><a href="riwayat.html">Riwayat</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Kontak & Lokasi</h4>
+                <ul>
+                    <li>📍 Jl. Iskandar Muda No. 969, Medan Baru, Kota Medan 20154</li>
+                    <li>📞 (061) 452-7890</li>
+                    <li>📧 sipusta.medan@gmail.com</li>
+                    <li>🕐 Senin-Jumat: 08.00-20.00</li>
+                    <li>🕐 Sabtu-Minggu: 09.00-17.00</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 Perpustakaan Umum Kota Medan — SiPusta.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

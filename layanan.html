@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Layanan - SiPusta</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- HEADER & NAVIGASI -->
+    <header class="navbar">
+        <input type="checkbox" id="navToggle" class="nav-toggle">
+
+        <div class="container navbar-inner">
+            <a href="index.html" class="logo">📚 SiPusta</a>
+
+            <label for="navToggle" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="layanan.html" class="active">Layanan</a></li>
+                    <li><a href="riwayat.html">Riwayat</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- KONTEN UTAMA -->
+    <main>
+        <section class="section" id="formulir">
+            <div class="container">
+                <form id="formPengajuan" action="#" method="post" class="form-card">
+                    <fieldset>
+                        <legend>Formulir Pengajuan Layanan</legend>
+                        
+                        <!-- Peringatan Error -->
+                        <div id="formError" style="color: #ef4444; font-weight: bold; margin-bottom: 15px; font-size: 0.9rem;"></div>
+
+                        <div class="form-group">
+                            <label for="nama">Nama Lengkap</label>
+                            <input type="text" id="nama" name="nama" placeholder="Masukkan nama lengkap">
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nim">Nomor Anggota</label>
+                                <input type="text" id="nim" name="nim" placeholder="Contoh: 12345678" maxlength="8">
+                            </div>
+                            <div class="form-group">
+                                <label for="prodi">Kategori Buku</label>
+                                <select id="prodi" name="prodi">
+                                    <option value="">— Pilih Kategori Buku —</option>
+                                    <option value="Sains & Teknologi">Sains & Teknologi</option>
+                                    <option value="Sejarah & Budaya">Sejarah & Budaya</option>
+                                    <option value="Sastra & Fiksi">Sastra & Fiksi</option>
+                                    <option value="Bisnis & Ekonomi">Bisnis & Ekonomi</option>
+                                    <option value="Buku Anak">Buku Anak</option>
+                                    <option value="Lainnya">Lainnya</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="layanan">Jenis Layanan</label>
+                                <select id="layanan" name="layanan">
+                                    <option value="">— Pilih Layanan —</option>
+                                    <option value="Peminjaman Buku">Peminjaman Buku</option>
+                                    <option value="Booking Ruang Baca">Booking Ruang Baca</option>
+                                    <option value="Perpanjangan Peminjaman">Perpanjangan Peminjaman</option>
+                                    <option value="Pengembalian Buku">Pengembalian Buku</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="tanggal">Tanggal Pengajuan</label>
+                                <input type="date" id="tanggal" name="tanggal">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="keterangan">Keterangan (opsional)</label>
+                            <textarea id="keterangan" name="keterangan" rows="3" placeholder="Jelaskan detail peminjaman/booking Anda..."></textarea>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">✏️ Ajukan Sekarang</button>
+                            <button type="reset" class="btn btn-outline">↺ Reset</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="kontak">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <strong>📚 SiPusta</strong>
+                <p>Perpustakaan Umum Kota Medan melayani masyarakat dalam meningkatkan budaya membaca dan literasi sejak 1987.</p>
+                <p style="margin-top: 12px; color: #e9c46a;">Buka setiap hari kecuali hari libur nasional.</p>
+            </div>
+
+            <div class="footer-nav">
+                <h4>Navigasi</h4>
+                <ul>
+                    <li><a href="index.html">Beranda</a></li>
+                    <li><a href="layanan.html">Layanan</a></li>
+                    <li><a href="riwayat.html">Riwayat</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Kontak & Lokasi</h4>
+                <ul>
+                    <li>📍 Jl. Iskandar Muda No. 969, Medan Baru, Kota Medan 20154</li>
+                    <li>📞 (061) 452-7890</li>
+                    <li>📧 sipusta.medan@gmail.com</li>
+                    <li>🕐 Senin-Jumat: 08.00-20.00</li>
+                    <li>🕐 Sabtu-Minggu: 09.00-17.00</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 Perpustakaan Umum Kota Medan — SiPusta.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
