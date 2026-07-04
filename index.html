@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiPusta - Perpustakaan Umum Kota Medan</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- HEADER & NAVIGASI -->
+    <header class="navbar">
+        <input type="checkbox" id="navToggle" class="nav-toggle">
+
+        <div class="container navbar-inner">
+            <a href="index.html" class="logo">📚 SiPusta</a>
+
+            <label for="navToggle" class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
+
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#" class="active">Beranda</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- KONTEN UTAMA -->
+    <main>
+
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <p class="hero-label">Perpustakaan Umum Kota Medan</p>
+                <h1>Membaca Adalah<br>Jendela Dunia</h1>
+                <p>Selamat datang di Perpustakaan Umum Kota Medan. Kami menyediakan
+                    lebih dari 50.000 koleksi buku, jurnal, dan referensi untuk masyarakat umum.
+                    Gratis dan terbuka untuk semua.</p>
+                <div class="hero-buttons">
+                    <a href="#koleksi" class="btn btn-primary">🔍 Telusuri Koleksi</a>
+                    <a href="#layanan" class="btn btn-outline">📋 Cara Meminjam</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Jam Operasional -->
+        <div class="info-bar">
+            <div class="container info-bar-inner">
+                <div class="info-item">
+                    🕐 <strong>Senin - Jumat</strong>&nbsp; 08.00 - 20.00 WIB
+                </div>
+                <div class="info-item">
+                    🕐 <strong>Sabtu - Minggu</strong>&nbsp; 09.00 - 17.00 WIB
+                </div>
+                <div class="info-item">
+                    📍 <strong>Lokasi</strong>&nbsp; Jl. Iskandar Muda No. 969, Medan
+                </div>
+            </div>
+        </div>
+
+        <!-- Pengumuman Section -->
+        <section class="section" id="pengumuman">
+            <div class="container">
+                <h2>📢 Pengumuman</h2>
+                <p class="section-desc">Informasi terbaru dari Perpustakaan Umum Kota Medan.</p>
+
+                <div class="announcement-list">
+                    <div class="announcement-item urgent">
+                        <span class="announcement-tag">Penting</span>
+                        <div class="announcement-content">
+                            <h3>Perpustakaan Tutup Sementara 17–18 Agustus 2026</h3>
+                            <p>Dalam rangka peringatan Hari Kemerdekaan RI, perpustakaan akan tutup pada tanggal 17–18
+                                Agustus 2026. Layanan akan kembali normal pada 19 Agustus 2026.</p>
+                            <span class="announcement-date">📅 Diposting: 1 Agustus 2026</span>
+                        </div>
+                    </div>
+
+                    <div class="announcement-item">
+                        <span class="announcement-tag">Program</span>
+                        <div class="announcement-content">
+                            <h3>Program Baca Bersama Anak Setiap Sabtu</h3>
+                            <p>Kami mengadakan sesi membaca bersama untuk anak usia 5–12 tahun setiap hari Sabtu pukul
+                                10.00–11.30 WIB di Ruang Anak Lantai 1. Gratis dan terbuka untuk umum.</p>
+                            <span class="announcement-date">📅 Diposting: 15 Juli 2026</span>
+                        </div>
+                    </div>
+
+                    <div class="announcement-item">
+                        <span class="announcement-tag">Koleksi Baru</span>
+                        <div class="announcement-content">
+                            <h3>500 Judul Buku Baru Telah Tersedia</h3>
+                            <p>Koleksi terbaru kami mencakup bidang sains, teknologi, sastra, dan sejarah. Segera
+                                kunjungi perpustakaan dan temukan bacaan favoritmu!</p>
+                            <span class="announcement-date">📅 Diposting: 10 Juli 2026</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Koleksi Buku Terbaru Section -->
+        <section class="section" id="koleksi">
+            <div class="container">
+                <h2>📖 Koleksi Buku Terbaru</h2>
+                <p class="section-desc">Buku-buku terbaru yang baru saja masuk ke koleksi kami.</p>
+
+                <div class="books-grid">
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="img/Fisika-kuantum.jpg" alt="Fisika Kuantum untuk Semua">
+                        </div>
+                        <div class="book-info">
+                            <h3>Fisika Kuantum untuk Semua</h3>
+                            <p class="book-author">Carlo Rovelli</p>
+                            <p class="book-meta">Tersedia: <strong>3 eksemplar</strong></p>
+                            <span class="book-status available">Tersedia</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="img/Sapiens.jpg" alt="Sapiens">
+                        </div>
+                        <div class="book-info">
+                            <h3>Sapiens: Riwayat Singkat Umat Manusia</h3>
+                            <p class="book-author">Yuval Noah Harari</p>
+                            <p class="book-meta">Tersedia: <strong>5 eksemplar</strong></p>
+                            <span class="book-status available">Tersedia</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="img/Bumi-manusia.jpg" alt="Bumi Manusia">
+                        </div>
+                        <div class="book-info">
+                            <h3>Bumi Manusia</h3>
+                            <p class="book-author">Pramoedya Ananta Toer</p>
+                            <p class="book-meta">Tersedia: <strong>0 eksemplar</strong></p>
+                            <span class="book-status unavailable">Sedang Dipinjam</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="img/Atomic-habits.jpg" alt="Atomic Habits">
+                        </div>
+                        <div class="book-info">
+                            <h3>Atomic Habits</h3>
+                            <p class="book-author">James Clear</p>
+                            <p class="book-meta">Tersedia: <strong>4 eksemplar</strong></p>
+                            <span class="book-status available">Tersedia</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="img/Thinking-Fast-and-Slow.jpg" alt="Thinking Fast and Slow">
+                        </div>
+                        <div class="book-info">
+                            <h3>Thinking, Fast and Slow</h3>
+                            <p class="book-author">Daniel Kahneman</p>
+                            <p class="book-meta">Tersedia: <strong>2 eksemplar</strong></p>
+                            <span class="book-status available">Tersedia</span>
+                        </div>
+                    </div>
+
+                    <div class="book-card">
+                        <div class="book-cover">
+                            <img src="img/Dunia-Sophie.jpg" alt="Dunia Sophie">
+                        </div>
+                        <div class="book-info">
+                            <h3>Dunia Sophie</h3>
+                            <p class="book-author">Jostein Gaarder</p>
+                            <p class="book-meta">Tersedia: <strong>1 eksemplar</strong></p>
+                            <span class="book-status available">Tersedia</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kategori Koleksi Section -->
+        <section class="section" id="kategori">
+            <div class="container">
+                <h2>🗂️ Kategori Koleksi</h2>
+                <p class="section-desc">Temukan buku berdasarkan kategori yang kamu minati.</p>
+
+                <div class="category-grid">
+                    <div class="category-card">
+                        <div class="category-icon">🔬</div>
+                        <h3>Sains & Teknologi</h3>
+                        <p>4.200 judul</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">📜</div>
+                        <h3>Sejarah & Budaya</h3>
+                        <p>3.800 judul</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">✍️</div>
+                        <h3>Sastra & Fiksi</h3>
+                        <p>6.500 judul</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">💼</div>
+                        <h3>Bisnis & Ekonomi</h3>
+                        <p>2.900 judul</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🧠</div>
+                        <h3>Psikologi</h3>
+                        <p>1.800 judul</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🎨</div>
+                        <h3>Seni & Desain</h3>
+                        <p>1.200 judul</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">👶</div>
+                        <h3>Buku Anak</h3>
+                        <p>5.100 judul</p>
+                    </div>
+                    <div class="category-card">
+                        <div class="category-icon">🌍</div>
+                        <h3>Geografi & Alam</h3>
+                        <p>2.100 judul</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Layanan Section -->
+        <section class="section" id="layanan">
+            <div class="container">
+                <h2>🏛️ Layanan Kami</h2>
+                <p class="section-desc">Berbagai layanan yang tersedia untuk anggota perpustakaan.</p>
+
+                <div class="cards-grid">
+                    <article class="card">
+                        <div class="card-icon">🪪</div>
+                        <h3>Kartu Anggota</h3>
+                        <p>Daftarkan diri sebagai anggota perpustakaan secara gratis. Bawa KTP atau Kartu Pelajar untuk
+                            pendaftaran di loket kami.</p>
+                        <span class="card-badge">Gratis</span>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">🔄</div>
+                        <h3>Peminjaman Buku</h3>
+                        <p>Anggota dapat meminjam hingga 5 buku sekaligus dengan durasi peminjaman 14 hari dan dapat
+                            diperpanjang 1 kali.</p>
+                        <span class="card-badge">Maks. 5 Buku</span>
+                    </article>
+
+                    <article class="card">
+                        <div class="card-icon">💻</div>
+                        <h3>Ruang Komputer</h3>
+                        <p>Tersedia 20 unit komputer dengan akses internet gratis untuk anggota. Buka setiap hari sesuai
+                            jam operasional perpustakaan.</p>
+                        <span class="card-badge">20 Unit</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistik Section -->
+        <section class="section" id="statistik">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat">
+                        <div class="stat-number">50.000+</div>
+                        <div class="stat-label">Koleksi Buku</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">12.400+</div>
+                        <div class="stat-label">Anggota Terdaftar</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">2.800+</div>
+                        <div class="stat-label">Peminjaman/Bulan</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">1987</div>
+                        <div class="stat-label">Tahun Berdiri</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="kontak">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <strong>📚 SiPusta</strong>
+                <p>Perpustakaan Umum Kota Medan melayani masyarakat dalam meningkatkan budaya membaca dan literasi sejak
+                    1987.</p>
+                <p style="margin-top: 12px; color: #e9c46a;">Buka setiap hari kecuali hari libur nasional.</p>
+            </div>
+
+            <div class="footer-nav">
+                <h4>Navigasi</h4>
+                <ul>
+                    <li><a href="#">Beranda</a></li>
+                    <li><a href="#koleksi">Koleksi Buku</a></li>
+                    <li><a href="#pengumuman">Pengumuman</a></li>
+                    <li><a href="#layanan">Layanan</a></li>
+                    <li><a href="#kontak">Kontak</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h4>Kontak & Lokasi</h4>
+                <ul>
+                    <li>📍 Jl. Iskandar Muda No. 969, Medan Baru, Kota Medan 20154</li>
+                    <li>📞 (061) 452-7890</li>
+                    <li>📧 sipusta.medan@gmail.com</li>
+                    <li>🕐 Senin-Jumat: 08.00-20.00</li>
+                    <li>🕐 Sabtu-Minggu: 09.00-17.00</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container">
+                <p>&copy; 2026 Perpustakaan Umum Kota Medan — SiPusta.</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
