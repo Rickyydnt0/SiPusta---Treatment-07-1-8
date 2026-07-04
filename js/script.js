@@ -1,195 +1,261 @@
-// ── DATA LAYER (localStorage) ──
-function getData() {
-    const raw = localStorage.getItem('sipusta_data');
-    return raw ? JSON.parse(raw) : [];
-}
+/*=============================================================================
+ * SiPusta - Core Logic
+ * Menangani interaksi localStorage dan rendering UI untuk sistem perpustakaan.
+=============================================================================== */
 
-function saveData(data) {
-    localStorage.setItem('sipusta_data', JSON.stringify(data));
-}
+const STORAGE_KEY = 'sipusta_library_records';
 
-// ── HELPERS ──
-function formatTanggal(dateStr) {
-    if (!dateStr) return "-";
-    const bulan = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-    const d = new Date(dateStr);
-    return d.getDate() + ' ' + bulan[d.getMonth()] + ' ' + d.getFullYear();
-}
+// --- Storage Utilities ---
+const fetchLibraryRecords = () => {
+    const records = localStorage.getItem(STORAGE_KEY);
+    return records ? JSON.parse(records) : [];
+};
 
-// ── FORM HANDLING ──
-function initForm() {
-    const form = document.getElementById('formPengajuan');
-    if (!form) return; // Hentikan jika bukan di halaman layanan.html
+const storeLibraryRecords = (dataList) => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(dataList));
+};
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const editId = urlParams.get('edit');
-    let editMode = false;
+const formatIndoDate = (dateString) => {
+    if (!dateString) return "-";
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+    const dateObj = new Date(dateString);
+    return `${dateObj.getDate()} ${months[dateObj.getMonth()]} ${dateObj.getFullYear()}`;
+};
 
-    if (editId) {
-        const data = getData();
-        const itemToEdit = data.find(function(item) { return item.id == editId; });
-        if (itemToEdit) {
-            editMode = true;
-            document.getElementById('nama').value = itemToEdit.nama || '';
-            document.getElementById('buku').value = itemToEdit.buku || '';
-            
-            const prodiEl = document.getElementById('prodi');
-            if (prodiEl && itemToEdit.prodi) prodiEl.value = itemToEdit.prodi;
-            
-            const layananEl = document.getElementById('layanan');
-            if (layananEl && itemToEdit.layanan) layananEl.value = itemToEdit.layanan;
-            
-            document.getElementById('tanggal').value = itemToEdit.tanggal || '';
-            document.getElementById('keterangan').value = itemToEdit.keterangan || '';
-            
-            const btnSubmit = form.querySelector('button[type="submit"]');
-            if (btnSubmit) btnSubmit.innerHTML = '✏️ Simpan Perubahan';
-        }
+// --- Custom UI Notifications ---
+const showToastNotification = (message) => {
+    let toastEl = document.getElementById('sipustaToast');
+    if (!toastEl) {
+        toastEl = document.createElement('div');
+        toastEl.id = 'sipustaToast';
+        toastEl.className = 'sipusta-toast';
+        document.body.appendChild(toastEl);
     }
-
-    form.addEventListener('submit', function (e) {
-        e.preventDefault(); 
-        
-        const nama = document.getElementById('nama').value.trim();
-        const buku = document.getElementById('buku').value;
-        const prodi = document.getElementById('prodi').value;
-        const layanan = document.getElementById('layanan').value;
-        const tanggal = document.getElementById('tanggal').value;
-        const keterangan = document.getElementById('keterangan').value.trim();
-        
-        const errorEl = document.getElementById('formError');
-        errorEl.textContent = '';
-        
-        // Validasi isian kosong (buku dan keterangan opsional)
-        if (!nama || !prodi || !layanan || !tanggal) {
-            errorEl.textContent = '❌ Semua field wajib (kecuali Judul Buku & Keterangan) harus diisi!';
-            return; 
-        }
-        
-        const data = getData();
-        
-        if (editMode) {
-            // Update mode
-            for (let i = 0; i < data.length; i++) {
-                if (data[i].id == editId) {
-                    data[i].nama = nama;
-                    data[i].buku = buku;
-                    data[i].prodi = prodi;
-                    data[i].layanan = layanan;
-                    data[i].tanggal = tanggal;
-                    data[i].keterangan = keterangan;
-                    break;
-                }
-            }
-        } else {
-            // Create mode
-            const item = {
-                id: Date.now(), 
-                nama: nama,
-                buku: buku,
-                prodi: prodi,
-                layanan: layanan,
-                tanggal: tanggal,
-                keterangan: keterangan
-            };
-            data.push(item); 
-        }
-        
-        saveData(data);
-        
-        form.reset();
-        errorEl.textContent = '';
-        alert(editMode ? '✅ Perubahan berhasil disimpan!' : '✅ Pengajuan berhasil disimpan!');
-        window.location.href = 'riwayat.html'; 
-    });
-}
-
-// ── TABEL RIWAYAT ──
-function initRiwayat() {
-    const tbody = document.getElementById('tableBody');
-    const emptyState = document.getElementById('emptyState');
-    const dataCount = document.getElementById('dataCount');
-    const btnHapusSemua = document.getElementById('btnHapusSemua');
+    toastEl.innerHTML = `<span>✅</span> <div>${message}</div>`;
     
-    if (!tbody) return; // Hentikan jika bukan di halaman riwayat.html
+    // Trigger animation
+    setTimeout(() => toastEl.classList.add('show'), 10);
+    
+    // Hide after 3 seconds
+    setTimeout(() => {
+        toastEl.classList.remove('show');
+    }, 3000);
+};
 
-    if (btnHapusSemua) {
-        btnHapusSemua.addEventListener('click', function () {
-            if (confirm('Apakah Anda yakin ingin menghapus seluruh riwayat pengajuan?')) {
-                saveData([]);  
-                renderTable(); 
-            }
-        });
+const showConfirmationModal = (title, text, onConfirm) => {
+    let overlay = document.getElementById('sipustaModalOverlay');
+    if (!overlay) {
+        overlay = document.createElement('div');
+        overlay.id = 'sipustaModalOverlay';
+        overlay.className = 'sipusta-modal-overlay';
+        overlay.innerHTML = `
+            <div class="sipusta-modal">
+                <h3 id="sipustaModalTitle"></h3>
+                <p id="sipustaModalText"></p>
+                <div class="sipusta-modal-actions form-actions" style="margin-top: 16px;">
+                    <button id="sipustaModalCancel" class="btn btn-outline" style="padding: 10px 20px;">Batal</button>
+                    <button id="sipustaModalConfirm" class="btn btn-primary" style="padding: 10px 20px; background: #ef4444; box-shadow: none;">Hapus</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+    }
+    
+    document.getElementById('sipustaModalTitle').textContent = title;
+    document.getElementById('sipustaModalText').textContent = text;
+    
+    const btnCancel = document.getElementById('sipustaModalCancel');
+    const btnConfirm = document.getElementById('sipustaModalConfirm');
+    
+    // Clean up previous listeners
+    const newBtnConfirm = btnConfirm.cloneNode(true);
+    const newBtnCancel = btnCancel.cloneNode(true);
+    btnConfirm.parentNode.replaceChild(newBtnConfirm, btnConfirm);
+    btnCancel.parentNode.replaceChild(newBtnCancel, btnCancel);
+    
+    newBtnCancel.addEventListener('click', () => {
+        overlay.classList.remove('active');
+    });
+    
+    newBtnConfirm.addEventListener('click', () => {
+        overlay.classList.remove('active');
+        onConfirm();
+    });
+    
+    overlay.classList.add('active');
+};
+
+
+// --- Form Submission Logic ---
+const setupSubmissionForm = () => {
+    const submissionForm = document.getElementById('formPengajuan');
+    if (!submissionForm) return;
+
+    const queryParams = new URLSearchParams(window.location.search);
+    const activeEditId = queryParams.get('edit');
+    let isEditing = false;
+
+    if (activeEditId) {
+        const records = fetchLibraryRecords();
+        const targetRecord = records.find(r => r.id == activeEditId);
+        
+        if (targetRecord) {
+            isEditing = true;
+            document.getElementById('nama').value = targetRecord.nama || '';
+            document.getElementById('buku').value = targetRecord.buku || '';
+            
+            const categorySelect = document.getElementById('prodi');
+            if (categorySelect && targetRecord.prodi) categorySelect.value = targetRecord.prodi;
+            
+            const serviceSelect = document.getElementById('layanan');
+            if (serviceSelect && targetRecord.layanan) serviceSelect.value = targetRecord.layanan;
+            
+            document.getElementById('tanggal').value = targetRecord.tanggal || '';
+            document.getElementById('keterangan').value = targetRecord.keterangan || '';
+            
+            const submitButton = submissionForm.querySelector('button[type="submit"]');
+            if (submitButton) submitButton.innerHTML = '✏️ Simpan Pembaruan';
+        }
     }
 
-    function renderTable() {
-        const data = getData();
+    submissionForm.addEventListener('submit', (event) => {
+        event.preventDefault(); 
         
-        if (dataCount) {
-            dataCount.textContent = data.length + ' pengajuan';
-        }
+        const payload = {
+            nama: document.getElementById('nama').value.trim(),
+            buku: document.getElementById('buku').value,
+            prodi: document.getElementById('prodi').value,
+            layanan: document.getElementById('layanan').value,
+            tanggal: document.getElementById('tanggal').value,
+            keterangan: document.getElementById('keterangan').value.trim()
+        };
         
-        if (data.length === 0) {
-            tbody.innerHTML = ''; 
-            if (emptyState) emptyState.style.display = 'block';
-            if (btnHapusSemua) btnHapusSemua.style.display = 'none';
+        const errorContainer = document.getElementById('formError');
+        errorContainer.textContent = '';
+        
+        if (!payload.nama || !payload.prodi || !payload.layanan || !payload.tanggal) {
+            errorContainer.textContent = '❌ Mohon lengkapi semua field yang diwajibkan!';
             return; 
         }
         
-        if (emptyState) emptyState.style.display = 'none';
-        if (btnHapusSemua) btnHapusSemua.style.display = 'inline-block';
+        let existingRecords = fetchLibraryRecords();
         
-        tbody.innerHTML = '';
-        
-        for (let i = 0; i < data.length; i++) {
-            const item = data[i];
-            const tr = document.createElement('tr'); 
-            
-            tr.innerHTML =
-                '<td>' + (i + 1) + '</td>' +
-                '<td>' + item.nama + '</td>' +
-                '<td>' + (item.buku || '-') + '</td>' +
-                '<td>' + item.layanan + '</td>' +
-                '<td>' + formatTanggal(item.tanggal) + '</td>' +
-                '<td>' +
-                    '<button class="btn-edit" data-id="' + item.id + '">✏️ Edit</button> ' +
-                    '<button class="btn-hapus" data-id="' + item.id + '">🗑 Hapus</button>' +
-                '</td>';
-                
-            tbody.appendChild(tr); 
+        if (isEditing) {
+            existingRecords = existingRecords.map(record => 
+                record.id == activeEditId ? { ...record, ...payload } : record
+            );
+        } else {
+            existingRecords.push({
+                id: Date.now(),
+                ...payload
+            });
         }
         
-        // Listener Update tombol EDIT
-        const btnEdit = document.querySelectorAll('.btn-edit');
-        btnEdit.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                const id = this.getAttribute('data-id'); 
-                window.location.href = 'layanan.html?edit=' + id; 
-            });
-        });
+        storeLibraryRecords(existingRecords);
+        submissionForm.reset();
         
-        // Listener Update tombol HAPUS
-        const btnHapus = document.querySelectorAll('.btn-hapus');
-        btnHapus.forEach(function (btn) {
-            btn.addEventListener('click', function () {
-                const id = Number(this.getAttribute('data-id')); 
-                if (confirm('Hapus pengajuan riwayat ini selamanya?')) {
-                    let data = getData();
-                    data = data.filter(function (item) {
-                        return item.id !== id;
-                    });
-                    saveData(data); 
-                    renderTable(); 
+        showToastNotification(isEditing ? 'Data berhasil diperbarui!' : 'Pengajuan berhasil dikirim!');
+        
+        // Delay redirect to allow toast to be seen briefly
+        setTimeout(() => {
+            window.location.href = 'riwayat.html';
+        }, 1200);
+    });
+};
+
+// --- History Table Logic ---
+const setupHistoryTable = () => {
+    const tableBody = document.getElementById('tableBody');
+    const noDataView = document.getElementById('emptyState');
+    const counterText = document.getElementById('dataCount');
+    const clearAllBtn = document.getElementById('btnHapusSemua');
+    
+    if (!tableBody) return;
+
+    if (clearAllBtn) {
+        clearAllBtn.addEventListener('click', () => {
+            showConfirmationModal(
+                'Hapus Semua Riwayat?', 
+                'Tindakan ini akan menghapus seluruh data pengajuan Anda secara permanen.', 
+                () => {
+                    storeLibraryRecords([]);  
+                    populateTableUI(); 
+                    showToastNotification('Seluruh riwayat berhasil dihapus.');
                 }
-            });
+            );
         });
     }
 
-    renderTable();
-}
+    const populateTableUI = () => {
+        const records = fetchLibraryRecords();
+        
+        if (counterText) {
+            counterText.textContent = `${records.length} pengajuan ditemukan`;
+        }
+        
+        if (records.length === 0) {
+            tableBody.innerHTML = ''; 
+            if (noDataView) noDataView.style.display = 'block';
+            if (clearAllBtn) clearAllBtn.style.display = 'none';
+            return; 
+        }
+        
+        if (noDataView) noDataView.style.display = 'none';
+        if (clearAllBtn) clearAllBtn.style.display = 'inline-block';
+        
+        tableBody.innerHTML = '';
+        
+        records.forEach((record, index) => {
+            const tableRow = document.createElement('tr'); 
+            
+            tableRow.innerHTML = `
+                <td>${index + 1}</td>
+                <td><strong>${record.nama}</strong></td>
+                <td>${record.buku || '-'}</td>
+                <td><span style="background: #ede0d4; padding: 4px 8px; border-radius: 4px; font-size: 0.85em; font-weight: bold; color: #7f4f24;">${record.layanan}</span></td>
+                <td>${formatIndoDate(record.tanggal)}</td>
+                <td>
+                    <button class="btn-edit-record" data-id="${record.id}">Edit</button>
+                    <button class="btn-delete-record" data-id="${record.id}">Hapus</button>
+                </td>
+            `;
+            tableBody.appendChild(tableRow); 
+        });
+        
+        attachTableActionListeners();
+    };
 
-// ── INIT ──
-document.addEventListener('DOMContentLoaded', function () {
-    initForm();
-    initRiwayat();
+    const attachTableActionListeners = () => {
+        document.querySelectorAll('.btn-edit-record').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const targetId = this.getAttribute('data-id'); 
+                window.location.href = `layanan.html?edit=${targetId}`; 
+            });
+        });
+        
+        document.querySelectorAll('.btn-delete-record').forEach(btn => {
+            btn.addEventListener('click', function () {
+                const targetId = Number(this.getAttribute('data-id')); 
+                showConfirmationModal(
+                    'Hapus Pengajuan?',
+                    'Apakah Anda yakin ingin menghapus data pengajuan ini?',
+                    () => {
+                        let records = fetchLibraryRecords();
+                        records = records.filter(r => r.id !== targetId);
+                        storeLibraryRecords(records); 
+                        populateTableUI(); 
+                        showToastNotification('Data pengajuan dihapus.');
+                    }
+                );
+            });
+        });
+    };
+
+    populateTableUI();
+};
+
+// --- Initialization ---
+document.addEventListener('DOMContentLoaded', () => {
+    setupSubmissionForm();
+    setupHistoryTable();
 });
