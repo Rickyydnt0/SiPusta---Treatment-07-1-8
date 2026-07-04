@@ -31,7 +31,7 @@ function initForm() {
         if (itemToEdit) {
             editMode = true;
             document.getElementById('nama').value = itemToEdit.nama || '';
-            document.getElementById('nim').value = itemToEdit.nim || '';
+            document.getElementById('buku').value = itemToEdit.buku || '';
             
             const prodiEl = document.getElementById('prodi');
             if (prodiEl && itemToEdit.prodi) prodiEl.value = itemToEdit.prodi;
@@ -51,7 +51,7 @@ function initForm() {
         e.preventDefault(); 
         
         const nama = document.getElementById('nama').value.trim();
-        const nim = document.getElementById('nim').value.trim();
+        const buku = document.getElementById('buku').value;
         const prodi = document.getElementById('prodi').value;
         const layanan = document.getElementById('layanan').value;
         const tanggal = document.getElementById('tanggal').value;
@@ -60,15 +60,9 @@ function initForm() {
         const errorEl = document.getElementById('formError');
         errorEl.textContent = '';
         
-        // Validasi isian kosong
-        if (!nama || !nim || !prodi || !layanan || !tanggal) {
-            errorEl.textContent = '❌ Semua field wajib (kecuali keterangan) harus diisi!';
-            return; 
-        }
-        
-        // Validasi panjang NIM/Nomor Anggota (harus 8 digit angka murni)
-        if (nim.length !== 8 || isNaN(nim)) {
-            errorEl.textContent = '❌ Nomor Anggota harus terdiri dari 8 digit angka murni!';
+        // Validasi isian kosong (buku dan keterangan opsional)
+        if (!nama || !prodi || !layanan || !tanggal) {
+            errorEl.textContent = '❌ Semua field wajib (kecuali Judul Buku & Keterangan) harus diisi!';
             return; 
         }
         
@@ -79,7 +73,7 @@ function initForm() {
             for (let i = 0; i < data.length; i++) {
                 if (data[i].id == editId) {
                     data[i].nama = nama;
-                    data[i].nim = nim;
+                    data[i].buku = buku;
                     data[i].prodi = prodi;
                     data[i].layanan = layanan;
                     data[i].tanggal = tanggal;
@@ -92,7 +86,7 @@ function initForm() {
             const item = {
                 id: Date.now(), 
                 nama: nama,
-                nim: nim,
+                buku: buku,
                 prodi: prodi,
                 layanan: layanan,
                 tanggal: tanggal,
@@ -154,7 +148,7 @@ function initRiwayat() {
             tr.innerHTML =
                 '<td>' + (i + 1) + '</td>' +
                 '<td>' + item.nama + '</td>' +
-                '<td>' + item.nim + '</td>' +
+                '<td>' + (item.buku || '-') + '</td>' +
                 '<td>' + item.layanan + '</td>' +
                 '<td>' + formatTanggal(item.tanggal) + '</td>' +
                 '<td>' +
